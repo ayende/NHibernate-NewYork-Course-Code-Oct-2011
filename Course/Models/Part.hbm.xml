@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+									 namespace="Course.Models"
+									 assembly="Course"
+									 >
+	<class name="Part" table="Parts">
+		<id name="Id">
+			<generator class="native"/>
+		</id>
+		<property name="Name"/>
+		<property name="Description"/>
+		<property name="PartNumber"/>
+	</class>
+</hibernate-mapping>

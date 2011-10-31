@@ -71,11 +71,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Part.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <EmbeddedResource Include="Models\Part.hbm.xml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -99,7 +101,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
-    <Folder Include="Models\" />
     <Folder Include="Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
