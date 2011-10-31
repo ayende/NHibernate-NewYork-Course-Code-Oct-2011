@@ -12,5 +12,10 @@
 		<property name="PartNumber"/>
 		<property name="SerialNumber"/>
 		<many-to-one name="User" column="`User`" />
+
+		<set name="References" table="PartsReferences">
+			<key column="RootId"/>
+			<many-to-many class="Part" column="ReferencedId" />
+		</set>
 	</class>
 </hibernate-mapping>

@@ -5,19 +5,19 @@ namespace Course.Controllers
 {
 	public class NHibernateController : Controller
 	{
-		protected ISession session;
+		public ISession NHibernateSession { get; set; }
 
 		protected override void OnActionExecuting(ActionExecutingContext filterContext)
 		{
-			session = MvcApplication.SessionFactory.OpenSession();
-			session.BeginTransaction();
+			NHibernateSession = MvcApplication.SessionFactory.OpenSession();
+			NHibernateSession.BeginTransaction();
 		}
 
 		protected override void OnActionExecuted(ActionExecutedContext filterContext)
 		{
 			if (filterContext.Exception == null)
-				session.Transaction.Commit();
-			session.Dispose();
+				NHibernateSession.Transaction.Commit();
+			NHibernateSession.Dispose();
 		}
 
 		protected override JsonResult Json(object data, string contentType, System.Text.Encoding contentEncoding, JsonRequestBehavior behavior)

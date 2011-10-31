@@ -3,11 +3,30 @@
 									 namespace="Course.Models"
 									 assembly="Course"
 									 >
-	<class name="User" table="Users" batch-size="20">
+	<class name="User" table="Users">
 		<id name="Id">
 			<generator class="native"/>
 		</id>
 		<property name="Name" unique="true"/>
 		<property name="Email"/>
+		<bag name="Parts" inverse="true">
+			<key column="`User`"/>
+			<one-to-many class="Part"/>
+		</bag>
+		<set name="Groups" table="UsersToTables">
+			<key column="UserId"/>
+			<many-to-many column="GroupId" class="Group"/>
+		</set>
+	</class>
+
+	<class name="Group" table="Groups">
+		<id name="Id">
+			<generator class="native"/>
+		</id>
+		<property name="Name" />
+		<bag name="Users" table="UsersToTables" inverse="true">
+			<key column="GroupId"/>
+			<many-to-many column="UserId" class="User"/>
+		</bag>
 	</class>
 </hibernate-mapping>

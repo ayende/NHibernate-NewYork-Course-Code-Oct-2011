@@ -36,8 +36,8 @@ namespace Course.Controllers
 
 		public ActionResult New(int userId)
 		{
-			var user = session.Load<User>(userId);
-			session.Save(new Part
+			var user = session.Get<User>(userId);
+			var part = new Part
 			{
 				Name = "tire",
 				Description = "Have some coffee",
@@ -45,9 +45,22 @@ namespace Course.Controllers
 				User = user,
 				SerialNumber = "1230-123-14-23"
 				
-			});
+			};
+			user.Parts.Add(part);
+			session.Save(part);
 
 			return Json(new { Create = true });
+		}
+
+		public ActionResult Attach(int x, int y)
+		{
+			var xp = session.Get<Part>(x);
+			var yp = session.Get<Part>(y);
+
+			xp.References.Add(yp);
+			yp.References.Add(xp);
+
+			return Json(new {Attached = true});
 		}
 
 		public ActionResult Load(int id)

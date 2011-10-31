@@ -7,7 +7,7 @@ namespace Course.Controllers
 	{
 		public ActionResult Index()
 		{
-			session.Save(new Part
+			NHibernateSession.Save(new Part
 			{
 				Name = "Tire Iron",
 				Description = "Use to kill at least 5000 people a year",

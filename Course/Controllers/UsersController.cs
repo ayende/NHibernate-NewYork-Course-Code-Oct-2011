@@ -7,6 +7,24 @@ namespace Course.Controllers
 {
 	public class UsersController : NHibernateController
 	{
+		public ActionResult NewGroup()
+		{
+			session.Save(new Group
+			{
+				Name = "Group"
+			});
+			return Json(new { Create = true });
+		}
+		public ActionResult Group(int id, int userId)
+		{
+			var g = session.Load<Group>(id);
+			var u = session.Get<User>(userId);
+
+			u.Groups.Add(g);
+			return Json(new { Create = true });
+		}
+
+
 		 public ActionResult New()
 		 {
 		 	session.Save(new User
