@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using HibernatingRhinos.Profiler.Appender.NHibernate;
 using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Dialect;
@@ -40,9 +41,12 @@ namespace Course
 
 			RegisterRoutes(RouteTable.Routes);
 
+			NHibernateProfiler.Initialize();
+
 			SessionFactory = new Configuration()
 				.DataBaseIntegration(properties =>
 				{
+					properties.SchemaAction = SchemaAutoAction.Create;
 					properties.Dialect<MsSql2008Dialect>();
 
 					var connectionStringSettings = ConfigurationManager.ConnectionStrings[Environment.MachineName];
