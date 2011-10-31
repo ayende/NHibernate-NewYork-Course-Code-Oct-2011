@@ -1,9 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using NHibernate;
+using NHibernate.Cfg;
+using NHibernate.Dialect;
+using Configuration = NHibernate.Cfg.Configuration;
+using Environment = System.Environment;
 
 namespace Course
 {
@@ -12,6 +19,8 @@ namespace Course
 
 	public class MvcApplication : System.Web.HttpApplication
 	{
+		public static ISessionFactory SessionFactory;
+
 		public static void RegisterRoutes(RouteCollection routes)
 		{
 			routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
@@ -29,6 +38,19 @@ namespace Course
 			AreaRegistration.RegisterAllAreas();
 
 			RegisterRoutes(RouteTable.Routes);
+
+			SessionFactory = new Configuration()
+				.AddAssembly(Assembly.GetExecutingAssembly())
+				.DataBaseIntegration(properties =>
+				{
+					var connectionStringSettings = ConfigurationManager.ConnectionStrings[Environment.MachineName];
+					properties.ConnectionStringName = connectionStringSettings != null ? 
+						Environment.MachineName : 
+						ConfigurationManager.ConnectionStrings[0].Name;
+
+					properties.Dialect<MsSql2008Dialect>();
+				})
+				.BuildSessionFactory();
 		}
 	}
 }
