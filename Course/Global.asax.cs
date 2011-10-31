@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -44,6 +46,7 @@ namespace Course
 			NHibernateProfiler.Initialize();
 
 			SessionFactory = new Configuration()
+				.SetNamingStrategy(new GetOuttttttt())
 				//.SetProperty(NHibernate.Cfg.Environment.DefaultBatchFetchSize, "50")
 				.DataBaseIntegration(properties =>
 				{
@@ -58,6 +61,48 @@ namespace Course
 				})
 				.AddAssembly(Assembly.GetExecutingAssembly())
 				.BuildSessionFactory();
+		}
+	}
+
+	public class GetOuttttttt : INamingStrategy
+	{
+		private static string Enough(params string[] args)
+		{
+			using(var md5 = MD5.Create())
+			{
+				var computeHash = md5.ComputeHash(Encoding.UTF8.GetBytes(string.Join("/", args)));
+				return "`" + BitConverter.ToString(computeHash) + "`";
+			}
+		}
+
+		public string ClassToTableName(string className)
+		{
+			return Enough(className);
+		}
+
+		public string PropertyToColumnName(string propertyName)
+		{
+			return Enough(propertyName);
+		}
+
+		public string TableName(string tableName)
+		{
+			return Enough(tableName);
+		}
+
+		public string ColumnName(string columnName)
+		{
+			return Enough(columnName);
+		}
+
+		public string PropertyToTableName(string className, string propertyName)
+		{
+			return Enough(className, propertyName);
+		}
+
+		public string LogicalColumnName(string columnName, string propertyName)
+		{
+			return Enough(columnName, propertyName);
 		}
 	}
 }
