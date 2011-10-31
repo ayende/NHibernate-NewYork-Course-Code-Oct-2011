@@ -9,6 +9,7 @@ using System.Web.Routing;
 using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Dialect;
+using NHibernate.Driver;
 using Configuration = NHibernate.Cfg.Configuration;
 using Environment = System.Environment;
 
@@ -40,16 +41,17 @@ namespace Course
 			RegisterRoutes(RouteTable.Routes);
 
 			SessionFactory = new Configuration()
-				.AddAssembly(Assembly.GetExecutingAssembly())
 				.DataBaseIntegration(properties =>
 				{
+					properties.Dialect<MsSql2008Dialect>();
+
 					var connectionStringSettings = ConfigurationManager.ConnectionStrings[Environment.MachineName];
 					properties.ConnectionStringName = connectionStringSettings != null ? 
 						Environment.MachineName : 
 						ConfigurationManager.ConnectionStrings[0].Name;
 
-					properties.Dialect<MsSql2008Dialect>();
 				})
+				.AddAssembly(Assembly.GetExecutingAssembly())
 				.BuildSessionFactory();
 		}
 	}
