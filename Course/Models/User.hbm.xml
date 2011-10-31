@@ -3,14 +3,11 @@
 									 namespace="Course.Models"
 									 assembly="Course"
 									 >
-	<class name="Part" table="Parts">
+	<class name="User" table="Users" batch-size="20">
 		<id name="Id">
 			<generator class="native"/>
 		</id>
-		<property name="Name"/>
-		<property name="Description" lazy="true"/>
-		<property name="PartNumber"/>
-		<property name="SerialNumber"/>
-		<many-to-one name="User" column="`User`" />
+		<property name="Name" unique="true"/>
+		<property name="Email"/>
 	</class>
 </hibernate-mapping>

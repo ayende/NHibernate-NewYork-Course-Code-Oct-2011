@@ -19,5 +19,10 @@ namespace Course.Controllers
 				session.Transaction.Commit();
 			session.Dispose();
 		}
+
+		protected override JsonResult Json(object data, string contentType, System.Text.Encoding contentEncoding, JsonRequestBehavior behavior)
+		{
+			return base.Json(data, contentType, contentEncoding, JsonRequestBehavior.AllowGet);
+		}
 	}
 }
