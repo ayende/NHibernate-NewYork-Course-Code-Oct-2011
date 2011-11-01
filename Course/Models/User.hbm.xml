@@ -3,7 +3,7 @@
 									 namespace="Course.Models"
 									 assembly="Course"
 									 >
-	<class name="User" table="Users">
+	<class name="User" table="Users" >
 		<id name="Id">
 			<generator class="hilo"/>
 		</id>
