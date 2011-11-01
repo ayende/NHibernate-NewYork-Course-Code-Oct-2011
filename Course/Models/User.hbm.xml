@@ -3,11 +3,10 @@
 									 namespace="Course.Models"
 									 assembly="Course"
 									 >
-	<class name="User" table="Users" discriminator-value="User">
+	<class name="User" table="Users">
 		<id name="Id">
-			<generator class="native"/>
+			<generator class="hilo"/>
 		</id>
-		<discriminator type="System.String" column="Type"/>
 		<property name="Name" unique="true"/>
 		<property name="Email"/>
 		<bag name="Parts" inverse="true">
@@ -19,9 +18,10 @@
 			<many-to-many column="GroupId" class="Group"/>
 		</set>
 		
-		<subclass name="Admin" discriminator-value="Admin">
+		<union-subclass name="Admin" table="Admins">
 			<property name="Password" />
-		</subclass>
+		</union-subclass>
+		
 	</class>
 
 
