@@ -46,11 +46,9 @@ namespace Course
 			NHibernateProfiler.Initialize();
 
 			SessionFactory = new Configuration()
-				//.SetNamingStrategy(new GetOuttttttt())
-				//.SetProperty(NHibernate.Cfg.Environment.DefaultBatchFetchSize, "50")
 				.DataBaseIntegration(properties =>
 				{
-					properties.SchemaAction = SchemaAutoAction.Create;
+					properties.SchemaAction = SchemaAutoAction.Update;
 					properties.Dialect<MsSql2008Dialect>();
 
 					var connectionStringSettings = ConfigurationManager.ConnectionStrings[Environment.MachineName];

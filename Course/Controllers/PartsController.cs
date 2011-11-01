@@ -10,9 +10,9 @@ namespace Course.Controllers
 
 		public ActionResult Move(int id)
 		{
-			var part = session.Get<Part>(id);
+			var part = NHibernateSession.Get<Part>(id);
 			var nextUserId = part.User.Id + 1;
-			part.User = session.Load<User>(nextUserId);
+			part.User = NHibernateSession.Load<User>(nextUserId);
 
 			return Json(new
 			{
@@ -23,7 +23,7 @@ namespace Course.Controllers
 
 		public ActionResult Report(int id, bool desc)
 		{
-			var part = session.Get<Part>(id);
+			var part = NHibernateSession.Get<Part>(id);
 
 			return Json(new
 			{
@@ -36,7 +36,7 @@ namespace Course.Controllers
 
 		public ActionResult New(int userId)
 		{
-			var user = session.Get<User>(userId);
+			var user = NHibernateSession.Get<User>(userId);
 			var part = new Part
 			{
 				Name = "tire",
@@ -47,15 +47,15 @@ namespace Course.Controllers
 				
 			};
 			user.Parts.Add(part);
-			session.Save(part);
+			NHibernateSession.Save(part);
 
 			return Json(new { Create = true });
 		}
 
 		public ActionResult Attach(int x, int y)
 		{
-			var xp = session.Get<Part>(x);
-			var yp = session.Get<Part>(y);
+			var xp = NHibernateSession.Get<Part>(x);
+			var yp = NHibernateSession.Get<Part>(y);
 
 			xp.References.Add(yp);
 			yp.References.Add(xp);
@@ -65,13 +65,13 @@ namespace Course.Controllers
 
 		public ActionResult Load(int id)
 		{
-			var user = session.Get<Part>(id);
+			var user = NHibernateSession.Get<Part>(id);
 			return Json(user);
 		}
 
 		public ActionResult List(int start = 0)
 		{
-			var users = session.Query<Part>()
+			var users = NHibernateSession.Query<Part>()
 				.Skip(start)
 				.Take(15)
 				.ToList();

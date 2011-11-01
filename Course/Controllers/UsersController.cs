@@ -7,9 +7,23 @@ namespace Course.Controllers
 {
 	public class UsersController : NHibernateController
 	{
+
+		public ActionResult InInGroup(int id, int groupId)
+		{
+			var u = NHibernateSession.Get<User>(id);
+			var grp = NHibernateSession.Load<Group>(groupId);
+			return Json(new { IsInGroup = u.Groups.Contains(grp) });
+		}
+
+		public ActionResult GroupCount(int id)
+		{
+			var u = NHibernateSession.Get<User>(id);
+			return Json(new {GroupCount = u.Groups.Count});
+		}
+
 		public ActionResult NewGroup()
 		{
-			session.Save(new Group
+			NHibernateSession.Save(new Group
 			{
 				Name = "Group"
 			});
@@ -17,8 +31,8 @@ namespace Course.Controllers
 		}
 		public ActionResult Group(int id, int userId)
 		{
-			var g = session.Load<Group>(id);
-			var u = session.Get<User>(userId);
+			var g = NHibernateSession.Load<Group>(id);
+			var u = NHibernateSession.Get<User>(userId);
 
 			u.Groups.Add(g);
 			return Json(new { Create = true });
@@ -27,7 +41,7 @@ namespace Course.Controllers
 
 		 public ActionResult New()
 		 {
-		 	session.Save(new User
+		 	NHibernateSession.Save(new User
 		 	{
 		 		Name = "ayende",
 		 		Email = "ayende@ayende.com"
@@ -38,13 +52,13 @@ namespace Course.Controllers
 
 		public ActionResult Load(int id)
 		{
-			var user = session.Get<User>(id);
+			var user = NHibernateSession.Get<User>(id);
 			return Json(user);
 		}
 
 		public ActionResult List(int start = 0)
 		{
-			var users = session.Query<User>()
+			var users = NHibernateSession.Query<User>()
 				.Skip(start)
 				.Take(15)
 				.ToList();

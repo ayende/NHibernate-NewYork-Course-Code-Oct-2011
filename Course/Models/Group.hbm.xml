@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+									 namespace="Course.Models"
+									 assembly="Course"
+									 >
+	<class name="Group" table="Groups">
+		<id name="Id">
+			<generator class="native"/>
+		</id>
+		<property name="Name" />
+		<bag name="Users" table="UsersToTables" inverse="true" lazy="extra">
+			<key column="GroupId"/>
+			<many-to-many column="UserId" class="User"/>
+		</bag>
+	</class>
+</hibernate-mapping>

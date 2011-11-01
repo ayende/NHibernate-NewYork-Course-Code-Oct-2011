@@ -71,6 +71,7 @@
     <Reference Include="System.Web.Mobile" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\NHibernateController.cs" />
     <Compile Include="Controllers\PartsController.cs" />
     <Compile Include="Controllers\SampleController.cs" />
@@ -88,6 +89,7 @@
     <Content Include="Content\Site.css" />
     <EmbeddedResource Include="Models\Part.hbm.xml" />
     <EmbeddedResource Include="Models\User.hbm.xml" />
+    <EmbeddedResource Include="Models\Group.hbm.xml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
