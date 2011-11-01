@@ -7,35 +7,25 @@ namespace Course.Controllers
 {
 	public class AdminController : NHibernateController
 	{
-		public ActionResult Delete(int id)
+		public ActionResult Update()
 		{
-			var user = NHibernateSession.Get<User>(id);
-			NHibernateSession.Delete(user);
-			return Content("Deleted");
+			var u = NHibernateSession.Query<User>().FirstOrDefault();
+			u.Name = "Ayende";
+			u.Email = "Ayende@Ayende.com";
+			return Content("updated");
 		}
 
 		public ActionResult Op()
 		{
-			var user = new User
+			for (int i = 0; i < 50; i++)
 			{
-				Name = "ayende",
-				Email = "abc"
-			};
-			user.Attributes.Age = -15;
-			NHibernateSession.Save(user);
-			NHibernateSession.Save(new Admin
-			{
-				Name = "admin",
-				Email = "das",
-				Password = "abcaqsdads"
-			});
-
-			NHibernateSession.Get<User>(11);
-			NHibernateSession.Get<Admin>(111);
-
-
-			NHibernateSession.Query<Admin>().ToList();
-			NHibernateSession.Query<User>().ToList();
+				var user = new User
+				{
+					Name = "ayende",
+					Email = "abc"
+				};
+				NHibernateSession.Save(user);
+			}
 
 			return Json(new {});
 		 }

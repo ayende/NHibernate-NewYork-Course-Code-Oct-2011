@@ -59,11 +59,14 @@ namespace Course
 					                                                                   	                        	ConfigurationManager.ConnectionStrings[0].Name;
 
 				})
+				.SetInterceptor(new RevengeOfTheDba())
 				.AddAssembly(Assembly.GetExecutingAssembly());
-			var nonNegativeUserListener = new NonNegativeUserListener();
-			cfg.SetListener(ListenerType.PreUpdate, nonNegativeUserListener);
-			cfg.SetListener(ListenerType.PreInsert, nonNegativeUserListener);
-			cfg.SetListener(ListenerType.Delete, new UserSoftDeletes());
+
+			cfg.SetListeners(ListenerType.PreUpdate, new IPreUpdateEventListener[]
+			{
+				new AuditLogListener(),
+				new AuditHistory()
+			});
 			SessionFactory = cfg
 				.BuildSessionFactory();
 		}

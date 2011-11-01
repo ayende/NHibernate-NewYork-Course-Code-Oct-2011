@@ -9,45 +9,23 @@
 		</id>
 		<property name="Name"/>
 		<property name="Email"/>
-		<bag name="Parts" inverse="true">
-			<key column="`User`"/>
-			<one-to-many class="Part"/>
-		</bag>
-		<set name="Groups" table="UsersToTables" lazy="extra">
-			<key column="UserId"/>
-			<many-to-many column="GroupId" class="Group"/>
-		</set>
-
-		<dynamic-component name="Attributes" access="field.lowercase">
-			<property name="Age" type="System.Int32"/>
-			<property name="Deleted" type="System.Boolean"/>
-		</dynamic-component>
-
-		<component name="WorkAddress">
-
-			<property name="Line1" column="WorkAddressLine1"/>
-			<property name="Line2" column="WorkAddressLine2"/>
-			<property name="City" column="WorkAddressCity"/>
-			<property name="State" column="WorkAddressState"/>
-
-		</component>
-
-
-		<component name="HomeAddress">
-
-			<property name="Line1" column="HomeAddressLine1"/>
-			<property name="Line2" column="HomeAddressLine2"/>
-			<property name="City" column="HomeAddressCity"/>
-			<property name="State" column="HomeAddressState"/>
-
-		</component>
-
-
-		<union-subclass name="Admin" table="Admins">
-			<property name="Password" />
-		</union-subclass>
-
 	</class>
 
+	<class entity-name="Course.Models.UserHistory" table="UsersHistory" >
+		<id name="Id" type="System.Int32">
+			<generator class="hilo"/>
+		</id>
+		<property name="Name" type="System.String"/>
+		<property name="Email" type="System.String"/>
+	</class>
+	
+	<class name="AuditLogEntry" table="AuditLogEntries">
+		<id name="Id">
+			<generator class="hilo"/>
+		</id>
+		<property name="EntityName"/>
+		<property name="EntityId"/>
+		<property name="ChangeDescription"/>
+	</class>
 
 </hibernate-mapping>

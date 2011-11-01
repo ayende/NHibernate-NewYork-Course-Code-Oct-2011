@@ -12,17 +12,6 @@ namespace Course.Models
 		public virtual ICollection<Group> Groups { get; set; }
 		public virtual ICollection<Part> Parts { get; set; }
 
-		private Hashtable attributes;
-
-		public virtual dynamic Attributes
-		{
-			get
-			{
-				attributes = attributes ?? new Hashtable();
-				return new DynamicHashtable(attributes);
-			}
-		}
-
 		public virtual Address WorkAddress { get; set; }
 
 		public virtual Address HomeAddress { get; set; }
