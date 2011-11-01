@@ -17,7 +17,19 @@
 			<key column="UserId"/>
 			<many-to-many column="GroupId" class="Group"/>
 		</set>
-		
+
+		<property name="WorkAddressLine1"/>
+		<property name="WorkAddressLine2"/>
+		<property name="WorkAddressCity"/>
+		<property name="WorkAddressState"/>
+
+
+		<property name="HomeAddressLine1"/>
+		<property name="HomeAddressLine2"/>
+		<property name="HomeAddressCity"/>
+		<property name="HomeAddressState"/>
+
+
 		<union-subclass name="Admin" table="Admins">
 			<property name="Password" />
 		</union-subclass>
