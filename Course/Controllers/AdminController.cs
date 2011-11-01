@@ -7,6 +7,13 @@ namespace Course.Controllers
 {
 	public class AdminController : NHibernateController
 	{
+		public ActionResult Delete(int id)
+		{
+			var user = NHibernateSession.Get<User>(id);
+			NHibernateSession.Delete(user);
+			return Content("Deleted");
+		}
+
 		public ActionResult Op()
 		{
 			var user = new User
@@ -14,7 +21,7 @@ namespace Course.Controllers
 				Name = "ayende",
 				Email = "abc"
 			};
-			user.Attributes.Age = 15;
+			user.Attributes.Age = -15;
 			NHibernateSession.Save(user);
 			NHibernateSession.Save(new Admin
 			{

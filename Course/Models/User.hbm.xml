@@ -7,7 +7,7 @@
 		<id name="Id">
 			<generator class="hilo"/>
 		</id>
-		<property name="Name" unique="true"/>
+		<property name="Name"/>
 		<property name="Email"/>
 		<bag name="Parts" inverse="true">
 			<key column="`User`"/>
@@ -20,6 +20,7 @@
 
 		<dynamic-component name="Attributes" access="field.lowercase">
 			<property name="Age" type="System.Int32"/>
+			<property name="Deleted" type="System.Boolean"/>
 		</dynamic-component>
 
 		<component name="WorkAddress">

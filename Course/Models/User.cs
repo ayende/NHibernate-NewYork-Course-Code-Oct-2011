@@ -12,11 +12,15 @@ namespace Course.Models
 		public virtual ICollection<Group> Groups { get; set; }
 		public virtual ICollection<Part> Parts { get; set; }
 
-		private Hashtable attributes = new Hashtable();
+		private Hashtable attributes;
 
 		public virtual dynamic Attributes
 		{
-			get { return new DynamicHashtable(attributes); }
+			get
+			{
+				attributes = attributes ?? new Hashtable();
+				return new DynamicHashtable(attributes);
+			}
 		}
 
 		public virtual Address WorkAddress { get; set; }

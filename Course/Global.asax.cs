@@ -8,11 +8,13 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Course.Models;
 using HibernatingRhinos.Profiler.Appender.NHibernate;
 using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Dialect;
 using NHibernate.Driver;
+using NHibernate.Event;
 using Configuration = NHibernate.Cfg.Configuration;
 using Environment = System.Environment;
 
@@ -45,7 +47,7 @@ namespace Course
 
 			NHibernateProfiler.Initialize();
 
-			SessionFactory = new Configuration()
+			var cfg = new Configuration()
 				.DataBaseIntegration(properties =>
 				{
 					properties.SchemaAction = SchemaAutoAction.Create;
@@ -53,11 +55,16 @@ namespace Course
 
 					var connectionStringSettings = ConfigurationManager.ConnectionStrings[Environment.MachineName];
 					properties.ConnectionStringName = connectionStringSettings != null ? 
-						Environment.MachineName : 
-						ConfigurationManager.ConnectionStrings[0].Name;
+					                                                                   	Environment.MachineName : 
+					                                                                   	                        	ConfigurationManager.ConnectionStrings[0].Name;
 
 				})
-				.AddAssembly(Assembly.GetExecutingAssembly())
+				.AddAssembly(Assembly.GetExecutingAssembly());
+			var nonNegativeUserListener = new NonNegativeUserListener();
+			cfg.SetListener(ListenerType.PreUpdate, nonNegativeUserListener);
+			cfg.SetListener(ListenerType.PreInsert, nonNegativeUserListener);
+			cfg.SetListener(ListenerType.Delete, new UserSoftDeletes());
+			SessionFactory = cfg
 				.BuildSessionFactory();
 		}
 	}
