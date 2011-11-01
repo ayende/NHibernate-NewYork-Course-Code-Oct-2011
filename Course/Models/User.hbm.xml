@@ -3,10 +3,11 @@
 									 namespace="Course.Models"
 									 assembly="Course"
 									 >
-	<class name="User" table="Users">
+	<class name="User" table="Users" discriminator-value="User">
 		<id name="Id">
 			<generator class="native"/>
 		</id>
+		<discriminator type="System.String" column="Type"/>
 		<property name="Name" unique="true"/>
 		<property name="Email"/>
 		<bag name="Parts" inverse="true">
@@ -17,23 +18,11 @@
 			<key column="UserId"/>
 			<many-to-many column="GroupId" class="Group"/>
 		</set>
+		
+		<subclass name="Admin" discriminator-value="Admin">
+			<property name="Password" />
+		</subclass>
 	</class>
 
-	<class name="Admin" table="Admins">
-		<id name="Id">
-			<generator class="native"/>
-		</id>
-		<property name="Name" />
-		<property name="IsSuperAdmin" />
-		<property name="Email"/>
-		<bag name="Parts" inverse="true">
-			<key column="`User`"/>
-			<one-to-many class="Part"/>
-		</bag>
-		<set name="Groups" table="UsersToTables" lazy="extra">
-			<key column="UserId"/>
-			<many-to-many column="GroupId" class="Group"/>
-		</set>
-	</class>
 
 </hibernate-mapping>

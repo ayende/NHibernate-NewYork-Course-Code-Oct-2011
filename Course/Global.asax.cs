@@ -48,7 +48,7 @@ namespace Course
 			SessionFactory = new Configuration()
 				.DataBaseIntegration(properties =>
 				{
-					properties.SchemaAction = SchemaAutoAction.Update;
+					properties.SchemaAction = SchemaAutoAction.Create;
 					properties.Dialect<MsSql2008Dialect>();
 
 					var connectionStringSettings = ConfigurationManager.ConnectionStrings[Environment.MachineName];

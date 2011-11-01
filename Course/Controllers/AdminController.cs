@@ -12,14 +12,17 @@ namespace Course.Controllers
 		 	NHibernateSession.Save(new User
 		 	{
 		 		Name = "ayende",
+				Email = "abc"
 		 	});
 			NHibernateSession.Save(new Admin
 			{
-				Name = "admin"
+				Name = "admin",
+				Email = "das",
+				Password = "abcaqsdads"
 			});
 
-			NHibernateSession.Get<User>(1);
-			NHibernateSession.Get<Admin>(1);
+			NHibernateSession.Get<User>(11);
+			NHibernateSession.Get<Admin>(111);
 
 
 			NHibernateSession.Query<Admin>().ToList();

@@ -14,6 +14,6 @@ namespace Course.Models
 
 	public class Admin : User
 	{
-		public virtual bool IsSuperAdmin { get; set; }
+		public virtual string Password { get; set; }
 	}
 }
