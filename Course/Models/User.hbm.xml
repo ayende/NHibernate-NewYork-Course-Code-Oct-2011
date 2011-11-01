@@ -18,22 +18,30 @@
 			<many-to-many column="GroupId" class="Group"/>
 		</set>
 
-		<property name="WorkAddressLine1"/>
-		<property name="WorkAddressLine2"/>
-		<property name="WorkAddressCity"/>
-		<property name="WorkAddressState"/>
+		<component name="WorkAddress">
+
+			<property name="Line1" column="WorkAddressLine1"/>
+			<property name="Line2" column="WorkAddressLine2"/>
+			<property name="City" column="WorkAddressCity"/>
+			<property name="State" column="WorkAddressState"/>
+
+		</component>
 
 
-		<property name="HomeAddressLine1"/>
-		<property name="HomeAddressLine2"/>
-		<property name="HomeAddressCity"/>
-		<property name="HomeAddressState"/>
+		<component name="HomeAddress">
+
+			<property name="Line1" column="HomeAddressLine1"/>
+			<property name="Line2" column="HomeAddressLine2"/>
+			<property name="City" column="HomeAddressCity"/>
+			<property name="State" column="HomeAddressState"/>
+
+		</component>
 
 
 		<union-subclass name="Admin" table="Admins">
 			<property name="Password" />
 		</union-subclass>
-		
+
 	</class>
 
 

@@ -10,15 +10,17 @@ namespace Course.Models
 		public virtual ICollection<Group> Groups { get; set; }
 		public virtual ICollection<Part> Parts { get; set; }
 
-		public virtual string WorkAddressLine1 { get; set; }
-		public virtual string WorkAddressLine2 { get; set; }
-		public virtual string WorkAddressState { get; set; }
-		public virtual string WorkAddressCity { get; set; }
+		public virtual Address WorkAddress { get; set; }
 
-		public virtual string HomeAddressLine1 { get; set; }
-		public virtual string HomeAddressLine2 { get; set; }
-		public virtual string HomeAddressState { get; set; }
-		public virtual string HomeAddressCity { get; set; }
+		public virtual Address HomeAddress { get; set; }
+	}
+
+	public class Address
+	{
+		public string Line1 { get; set; }
+		public string Line2 { get; set; }
+		public string State { get; set; }
+		public string City { get; set; }
 	}
 
 	public class Admin : User
