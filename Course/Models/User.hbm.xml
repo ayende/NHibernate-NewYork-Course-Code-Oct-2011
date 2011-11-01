@@ -18,6 +18,10 @@
 			<many-to-many column="GroupId" class="Group"/>
 		</set>
 
+		<dynamic-component name="Attributes" access="field.lowercase">
+			<property name="Age" type="System.Int32"/>
+		</dynamic-component>
+
 		<component name="WorkAddress">
 
 			<property name="Line1" column="WorkAddressLine1"/>

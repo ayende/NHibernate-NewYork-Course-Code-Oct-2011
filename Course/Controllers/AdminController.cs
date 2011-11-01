@@ -8,12 +8,14 @@ namespace Course.Controllers
 	public class AdminController : NHibernateController
 	{
 		public ActionResult Op()
-		 {
-		 	NHibernateSession.Save(new User
-		 	{
-		 		Name = "ayende",
+		{
+			var user = new User
+			{
+				Name = "ayende",
 				Email = "abc"
-		 	});
+			};
+			user.Attributes.Age = 15;
+			NHibernateSession.Save(user);
 			NHibernateSession.Save(new Admin
 			{
 				Name = "admin",

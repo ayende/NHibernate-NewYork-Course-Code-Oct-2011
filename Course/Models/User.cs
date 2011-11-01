@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Dynamic;
 
 namespace Course.Models
 {
@@ -10,9 +12,38 @@ namespace Course.Models
 		public virtual ICollection<Group> Groups { get; set; }
 		public virtual ICollection<Part> Parts { get; set; }
 
+		private Hashtable attributes = new Hashtable();
+
+		public virtual dynamic Attributes
+		{
+			get { return new DynamicHashtable(attributes); }
+		}
+
 		public virtual Address WorkAddress { get; set; }
 
 		public virtual Address HomeAddress { get; set; }
+	}
+
+	public class DynamicHashtable : DynamicObject
+	{
+		private readonly Hashtable attributes;
+
+		public DynamicHashtable(Hashtable attributes)
+		{
+			this.attributes = attributes;
+		}
+
+		public override bool TryGetMember(GetMemberBinder binder, out object result)
+		{
+			result = attributes[binder.Name];
+			return true;
+		}
+
+		public override bool TrySetMember(SetMemberBinder binder, object value)
+		{
+			attributes[binder.Name] = value;
+			return true;
+		}
 	}
 
 	public class Address
