@@ -10,9 +10,9 @@ namespace Course.Tests
 		[Fact]
 		public void WillReturnUserEmail()
 		{
-			using(var s = OpenSession())
+			using (var s = OpenSession())
 			{
-				using(var tx = s.BeginTransaction())
+				using (var tx = s.BeginTransaction())
 				{
 					s.Save(new User
 					{
@@ -21,18 +21,19 @@ namespace Course.Tests
 					});
 					tx.Commit();
 				}
+			}
 
-				s.Clear();
-
+			using (var s = OpenSession())
+			{
 				var controller = new RealController
-				{
-					NHibernateSession = s
-				};
+					{
+						NHibernateSession = s
+					};
 				var jsonResult = (JsonResult)controller.Index();
 				var emailProp = jsonResult.Data.GetType().GetProperty("Email");
 
 
-				var actual = emailProp.GetValue(jsonResult.Data,null);
+				var actual = emailProp.GetValue(jsonResult.Data, null);
 				Assert.Equal("ayende@ayende.com", actual);
 			}
 		}
@@ -51,8 +52,9 @@ namespace Course.Tests
 					});
 					tx.Commit();
 				}
-
-				s.Clear();
+			}
+			using (var s = OpenSession())
+			{
 
 				var controller = new RealController
 				{
