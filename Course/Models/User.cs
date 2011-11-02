@@ -1,16 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Dynamic;
-using NHibernate.Search.Attributes;
 
 namespace Course.Models
 {
 	public class User
 	{
 		public virtual int Id { get; set; }
-		[Field(Store = Store.Yes)]
 		public virtual string Name { get; set; }
-		[Field(Store = Store.Yes)]
 		public virtual string Email { get; set; }
 		public virtual ICollection<Group> Groups { get; set; }
 		public virtual ICollection<Part> Parts { get; set; }

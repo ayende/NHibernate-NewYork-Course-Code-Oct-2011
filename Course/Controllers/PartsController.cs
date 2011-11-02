@@ -7,7 +7,6 @@ namespace Course.Controllers
 {
 	public class PartsController : NHibernateController
 	{
-
 		public ActionResult Move(int id)
 		{
 			var part = NHibernateSession.Get<Part>(id);
@@ -21,16 +20,28 @@ namespace Course.Controllers
 
 		}
 
-		public ActionResult Report(int id, bool desc)
+		public ActionResult Query()
+		{
+			var parts = NHibernateSession.Query<Part>()
+				.Fetch(x=>x.User)
+				.Cacheable()
+				.ToList();	
+			return Json(new
+			{
+				parts.Count,
+				Users = parts.Select(p=>p.User.Name).Distinct().ToList()
+			});
+		}
+
+		public ActionResult Report(int id)
 		{
 			var part = NHibernateSession.Get<Part>(id);
 
 			return Json(new
 			{
 				part.Id,
-				SerialNumber = part.SerialNumber,
-				HasUser = part.User != null,
-				Desc = desc ? part.Description : null
+				part.SerialNumber,
+				RefCount = part.References.Count
 			});
 		}
 

@@ -7,23 +7,22 @@
 		<id name="Id">
 			<generator class="native"/>
 		</id>
-		<property name="Name"/>
-		<property name="Description" lazy="true"/>
+		<properties name="Test" unique="true">
+			<property name="Name"/>
+			<property name="Description" lazy="true"/>
+		</properties>
 		<property name="Price"/>
-		
+
 		<many-to-one name="User" column="`User`" />
 
 		<set name="References" table="PartsReferences">
+			<cache usage="read-write"/>
 			<key column="RootId"/>
 			<many-to-many class="Part" column="ReferencedId" />
 		</set>
 
-		<join table="PartsExtended" >
-			<key column="PartId"/>
-
 			<property name="PartNumber"/>
 			<property name="SerialNumber"/>
-		</join>
 
 	</class>
 </hibernate-mapping>

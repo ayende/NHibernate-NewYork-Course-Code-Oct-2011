@@ -1,22 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using Course.Models;
 using HibernatingRhinos.Profiler.Appender.NHibernate;
 using NHibernate;
+using NHibernate.Cache;
 using NHibernate.Cfg;
-using NHibernate.Cfg.Loquacious;
 using NHibernate.Dialect;
-using NHibernate.Driver;
 using NHibernate.Event;
-using NHibernate.Search.Event;
 using Configuration = NHibernate.Cfg.Configuration;
 using Environment = System.Environment;
 
@@ -52,7 +46,7 @@ namespace Course
 			var cfg = new Configuration()
 				.DataBaseIntegration(properties =>
 				{
-					properties.SchemaAction = SchemaAutoAction.Create;
+					//properties.SchemaAction = SchemaAutoAction.Create;
 					properties.Dialect<MsSql2008Dialect>();
 					var connectionStringSettings = ConfigurationManager.ConnectionStrings[Environment.MachineName];
 					properties.ConnectionStringName = connectionStringSettings != null ? 
@@ -60,13 +54,13 @@ namespace Course
 					                                                                   	                        	ConfigurationManager.ConnectionStrings[0].Name;
 
 				})
+				.Cache(properties =>
+				{
+					properties.Provider<HashtableCacheProvider>();
+					properties.UseQueryCache = true;
+				})
 				.SetInterceptor(new RevengeOfTheDba())
 				.AddAssembly(Assembly.GetExecutingAssembly());
-
-			cfg.SetProperty("hibernate.search.default.indexBase", @"C:\Work\CourseNewYork\Course\Indexes");
-			cfg.SetListener(ListenerType.PostUpdate, new FullTextIndexEventListener());
-			cfg.SetListener(ListenerType.PostDelete, new FullTextIndexEventListener());
-			cfg.SetListener(ListenerType.PostInsert, new FullTextIndexEventListener());
 
 			SessionFactory = cfg
 				.BuildSessionFactory();

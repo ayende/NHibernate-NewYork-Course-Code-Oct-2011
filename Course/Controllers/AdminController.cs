@@ -9,15 +9,10 @@ namespace Course.Controllers
 {
 	public class AdminController : NHibernateController
 	{
-		public ActionResult Search2(string s)
+		public ActionResult Test()
 		{
-			var fullTextSession = NHibernate.Search.Search.CreateFullTextSession(NHibernateSession);
-
-			var parts = fullTextSession.CreateFullTextQuery<Part>(s)
-				.List<Part>();
-			return Json(parts);
+			return Content(typeof (Part).IsSerializable.ToString());
 		}
-
 		public ActionResult Search(SearchParams args)
 		{
 			var q = NHibernateSession.Query<Part>();
