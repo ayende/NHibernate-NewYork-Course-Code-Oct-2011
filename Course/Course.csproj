@@ -24,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -40,8 +41,12 @@
     <Reference Include="Iesi.Collections">
       <HintPath>packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
     </Reference>
+    <Reference Include="Lucene.Net">
+      <HintPath>packages\Lucene.2.9.2.2\lib\Lucene.Net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="NHibernate">
+    <Reference Include="NHibernate, Version=3.2.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>packages\NHibernate.3.2.0.4000\lib\Net35\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -89,6 +94,7 @@
     <Compile Include="Models\AuditLogEntry.cs" />
     <Compile Include="Models\Group.cs" />
     <Compile Include="Models\NonNegativeUserListener.cs" />
+    <Compile Include="Models\Note.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Part.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

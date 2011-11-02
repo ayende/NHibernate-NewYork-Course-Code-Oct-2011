@@ -36,18 +36,16 @@ namespace Course.Controllers
 
 		public ActionResult New(int userId)
 		{
-			var user = NHibernateSession.Get<User>(userId);
 			var part = new Part
 			{
 				Name = "tire",
 				Description = "Have some coffee",
 				PartNumber = "il-123",
-				User = user,
-				SerialNumber = "1230-123-14-23"
-				
+				SerialNumber = "1230-123-14-23",
+				User = NHibernateSession.Load<User>(userId)
 			};
-			user.Parts.Add(part);
 			NHibernateSession.Save(part);
+
 
 			return Json(new { Create = true });
 		}

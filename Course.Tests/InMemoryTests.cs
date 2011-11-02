@@ -1,10 +1,13 @@
 using System;
+using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
 using Course.Models;
 using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Dialect;
+using NHibernate.Engine;
+using NHibernate.Mapping;
 using NHibernate.Tool.hbm2ddl;
 
 namespace Course.Tests
@@ -50,4 +53,5 @@ namespace Course.Tests
 			connection.Dispose();
 		}
 	}
+
 }

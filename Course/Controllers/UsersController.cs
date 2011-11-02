@@ -41,11 +41,18 @@ namespace Course.Controllers
 
 		 public ActionResult New()
 		 {
-		 	NHibernateSession.Save(new User
+		 	var user = new User
 		 	{
 		 		Name = "ayende",
 		 		Email = "ayende@ayende.com"
-		 	});
+		 	};
+		 	NHibernateSession.Save(user);
+
+			NHibernateSession.Save(new Note
+			{
+				Owner = user,
+				Content = "Got a cold"
+			});
 
 		 	return Json(new {Create = true});
 		 }

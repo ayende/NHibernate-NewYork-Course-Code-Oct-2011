@@ -9,13 +9,21 @@
 		</id>
 		<property name="Name"/>
 		<property name="Description" lazy="true"/>
-		<property name="PartNumber"/>
-		<property name="SerialNumber"/>
+		<property name="Price"/>
+		
 		<many-to-one name="User" column="`User`" />
 
 		<set name="References" table="PartsReferences">
 			<key column="RootId"/>
 			<many-to-many class="Part" column="ReferencedId" />
 		</set>
+
+		<join table="PartsExtended" >
+			<key column="PartId"/>
+
+			<property name="PartNumber"/>
+			<property name="SerialNumber"/>
+		</join>
+
 	</class>
 </hibernate-mapping>

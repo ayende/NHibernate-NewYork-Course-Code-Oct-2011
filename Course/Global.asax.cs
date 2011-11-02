@@ -12,9 +12,11 @@ using Course.Models;
 using HibernatingRhinos.Profiler.Appender.NHibernate;
 using NHibernate;
 using NHibernate.Cfg;
+using NHibernate.Cfg.Loquacious;
 using NHibernate.Dialect;
 using NHibernate.Driver;
 using NHibernate.Event;
+using NHibernate.Search.Event;
 using Configuration = NHibernate.Cfg.Configuration;
 using Environment = System.Environment;
 
@@ -52,7 +54,6 @@ namespace Course
 				{
 					properties.SchemaAction = SchemaAutoAction.Create;
 					properties.Dialect<MsSql2008Dialect>();
-
 					var connectionStringSettings = ConfigurationManager.ConnectionStrings[Environment.MachineName];
 					properties.ConnectionStringName = connectionStringSettings != null ? 
 					                                                                   	Environment.MachineName : 
@@ -62,11 +63,11 @@ namespace Course
 				.SetInterceptor(new RevengeOfTheDba())
 				.AddAssembly(Assembly.GetExecutingAssembly());
 
-			cfg.SetListeners(ListenerType.PreUpdate, new IPreUpdateEventListener[]
-			{
-				new AuditLogListener(),
-				new AuditHistory()
-			});
+			cfg.SetProperty("hibernate.search.default.indexBase", @"C:\Work\CourseNewYork\Course\Indexes");
+			cfg.SetListener(ListenerType.PostUpdate, new FullTextIndexEventListener());
+			cfg.SetListener(ListenerType.PostDelete, new FullTextIndexEventListener());
+			cfg.SetListener(ListenerType.PostInsert, new FullTextIndexEventListener());
+
 			SessionFactory = cfg
 				.BuildSessionFactory();
 		}

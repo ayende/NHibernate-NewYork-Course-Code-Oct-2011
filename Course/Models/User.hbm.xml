@@ -9,15 +9,16 @@
 		</id>
 		<property name="Name"/>
 		<property name="Email"/>
+
 	</class>
 
-	<class entity-name="Course.Models.UserHistory" table="UsersHistory" >
+	<!--<class entity-name="Course.Models.UserHistory" table="UsersHistory" >
 		<id name="Id" type="System.Int32">
 			<generator class="hilo"/>
 		</id>
 		<property name="Name" type="System.String"/>
 		<property name="Email" type="System.String"/>
-	</class>
+	</class>-->
 	
 	<class name="AuditLogEntry" table="AuditLogEntries">
 		<id name="Id">
@@ -28,4 +29,18 @@
 		<property name="ChangeDescription"/>
 	</class>
 
+	<class name="Note" table="Notes">
+		<id name="Id">
+			<generator class="hilo"/>
+		</id>
+		<property name="Content"/>
+		<any name="Owner" id-type="System.Int32" meta-type="System.String">
+
+			<meta-value class="User" value="User"/>
+			<meta-value class="Part" value="Part"/>
+			
+			<column name="OwnerType"/>
+			<column name="OwnerId"/>
+		</any>
+	</class>
 </hibernate-mapping>
